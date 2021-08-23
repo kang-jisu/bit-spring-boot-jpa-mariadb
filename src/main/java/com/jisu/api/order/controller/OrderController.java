@@ -1,32 +1,32 @@
-package com.jisu.api.item.controller;
+package com.jisu.api.order.controller;
 
-import com.jisu.api.item.domain.Item;
+import com.jisu.api.order.domain.Order;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/items")
-public class ItemController {
+@RequestMapping("/orders")
+public class OrderController {
 
     @GetMapping
-    public List<Item> findAll() {
+    public List<Order> findAll() {
         return null;
     }
 
     @GetMapping("/{id{")
-    public Optional<Item> findById(@PathVariable Long id) {
+    public Optional<Order> findById(@PathVariable Long id) {
         return Optional.empty();
     }
 
     @PostMapping
-    public void save(Item item) {
+    public void save(Order order) {
 
     }
 
     @PutMapping
-    public void update(Item item) {
+    public void update(Order order){
 
     }
 
