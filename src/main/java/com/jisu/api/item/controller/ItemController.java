@@ -6,7 +6,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +24,7 @@ public class ItemController {
 
     @GetMapping
     public ResponseEntity<List<Item>> findAll() {
-        return ResponseEntity.ok( itemService.findAll());
+        return ResponseEntity.ok(itemService.findAll());
     }
 
     @GetMapping("/{id}")
@@ -54,9 +53,9 @@ public class ItemController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiResponses(value = { @ApiResponse(code = 400, message = "Something went wrong"),
-                            @ApiResponse(code = 403, message = "Access Denied"),
-                            @ApiResponse(code = 422, message = "Username is alredy in use") })
+    @ApiResponses(value = {@ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access Denied"),
+            @ApiResponse(code = 422, message = "Username is alredy in use")})
     public void deleteById(@PathVariable Long id) {
         itemService.deleteById(id);
     }

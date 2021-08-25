@@ -24,43 +24,43 @@ public class SwaggerConfig {
     @Bean
     public Docket api(){
         return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(Predicates.not(PathSelectors.regex("/error")))
+                .select() // swagger설정 이후 apiselectorbuiler를 리턴한다.
+                .apis(RequestHandlerSelectors.any()) // 전체 범위 포함. 아니라면 따로지정
+                .paths(Predicates.not(PathSelectors.regex("/error"))) // api 주소가 /error가 아닌것들에 대해서만
                 .build()
                 .apiInfo(metadata())
-                .useDefaultResponseMessages(false)
-                .securitySchemes(Collections.singletonList(apiKey()))
-                .securityContexts(Collections.singletonList(securityContext()))
-                .tags(new Tag("users","Operations about users"))
-                .genericModelSubstitutes(Optional.class);
+                .useDefaultResponseMessages(false) // 기본 반환 메세지 세팅
+//                .securitySchemes(Collections.singletonList(apiKey()))
+//                .securityContexts(Collections.singletonList(securityContext()))
+                .tags(new Tag("users","Operations about users"));
+//                .genericModelSubstitutes(Optional.class); // spring webflux시에 사용할 것
     }
 
-    private ApiInfo metadata() {
+    private ApiInfo metadata() { // swagger 문서에서 보여질 info 메세지
         return new ApiInfoBuilder()//
-                .title("JSON Web Token Authentication API")//
+                .title("JSON Web Token Authentication API")
                 .description("This is a sample JWT authentication service. You can find out more about JWT at [https://jwt.io/](https://jwt.io/). For this sample, you can use the `admin` or `client` users (password: admin and client respectively) to test the authorization filters. Once you have successfully logged in and obtained the token, you should click on the right top button `Authorize` and introduce it with the prefix \"Bearer \".")//
                 .version("1.0.0")//
                 .license("MIT License").licenseUrl("http://opensource.org/licenses/MIT")//
                 .contact(new Contact(null, null, "rkdwltn0425@gmail.com"))//
                 .build();
     }
-    private ApiKey apiKey() {
-        return new ApiKey("Authorization", "Authorization", "header");
-    }
-    private SecurityContext securityContext() {
-        return SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.any())
-                .build();
-    }
-    private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return Arrays.asList(new SecurityReference("Authorization", authorizationScopes));
-    }
-
+//    private ApiKey apiKey() {
+//        return new ApiKey("Authorization", "Authorization", "header");
+//    }
+//    private SecurityContext securityContext() {
+//        return SecurityContext.builder()
+//                .securityReferences(defaultAuth())
+//                .forPaths(PathSelectors.any())
+//                .build();
+//    }
+//    private List<SecurityReference> defaultAuth() {
+//        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+//        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+//        authorizationScopes[0] = authorizationScope;
+//        return Arrays.asList(new SecurityReference("Authorization", authorizationScopes));
+//    }
+//
 
 
 }
