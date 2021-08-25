@@ -34,8 +34,8 @@ class ItemServiceImplTest {
     @Test
     void findAll() {
         given(itemRepository.findAll()).willReturn(Arrays.asList(
-                        new Item("삼성","갤럭시","블루"),
-                        new Item("삼성1","갤럭시","블루")));
+                Item.builder().itemBrand("삼성").itemName("갤럭시").itemColor("블루").build(),
+                Item.builder().itemBrand("삼성1").itemName("갤럭시1").itemColor("블루1").build()));
         List<Item> list = itemRepository.findAll();
         assertThat(list.size(),is(2));
     }
