@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /*
-토큰을 제공하는 매니저
+JWT 토큰을 제공하는 매니저
  */
 
 @Log
@@ -70,15 +70,18 @@ public class SecurityProvider implements AuthenticationProvider {
 
     }
 
+    // jwt 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token){
         UserDetails userDetails = userDetailsService.loadUserByUsername(getUsername(token));
         return new UsernamePasswordAuthenticationToken(userDetails.getAuthorities(), "", userDetails.getAuthorities());
     }
 
+    // 토큰에서 회원 정보 추출
     public String getUsername(String token){
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
+    // requeset의 header에서 token을 가져올것
     public String resolveToken(HttpServletRequest req){
         String bearerToken = req.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer")){
@@ -87,6 +90,7 @@ public class SecurityProvider implements AuthenticationProvider {
         return null;
     }
 
+    // 토큰 유효성 확인
     public boolean validateToken(String token) throws Exception{
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);

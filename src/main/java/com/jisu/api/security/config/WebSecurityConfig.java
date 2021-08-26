@@ -4,15 +4,23 @@ import com.jisu.api.security.domain.SecurityProvider;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/*
+구체적인 로그인/로그아웃 등 보안 관련 설정을 어떻게 할 지를 결정한다.
+사용자 인증에 대한 정보를 WebSecurityConfigurerAdapter의 configure(HttpSecurity http)안에 있는 설정에서 제공한다.
+ */
+@Configuration
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SecurityProvider provider; // json web token값 제공
@@ -35,6 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManager();
     }
 
+    /* 패턴을 이용해서 접근을 막음, 보안 처리  */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
@@ -51,6 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    /* HttpSecurity에서 적용한 패턴을 제외한, 정적 리소스나 HTML 파일에 대한 허용 처리 */
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()

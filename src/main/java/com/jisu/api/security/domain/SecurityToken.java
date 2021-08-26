@@ -20,8 +20,8 @@ public class SecurityToken {
     private String createToken(){
         try {
             Map<String, Object> headers = new HashMap<>();
-            headers.put("alg", "HS2256");
             headers.put("typ", "JWT");
+            headers.put("alg", "HS256"); // HMAX ,SHA 256 or RSA
 
             Map<String, Object> payload = new HashMap<>();
             payload.put("data", "dummy");
@@ -36,7 +36,7 @@ public class SecurityToken {
                     .setClaims(payload)
                     .setSubject("user")
                     .setExpiration(ext)
-                    .signWith(SignatureAlgorithm.ES256, key.getBytes())
+                    .signWith(SignatureAlgorithm.HS256, key.getBytes())
                     .compact();
         }catch (SecurityException e){
             log.info("SecurityException JWT");
