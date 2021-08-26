@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/*
+ 인증된 사용자가 잘못된 접근을 할 경우 403에러로 응답]
+ */
 @RequiredArgsConstructor
 public class SecurityAccessDeniedHandler implements AccessDeniedHandler {
     private final HandlerExceptionResolver handlerExceptionResolver;

@@ -10,6 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/*
+doFilterInternal메서드를 통해
+- 실제 필터링 로직을 수행한다.
+- jwt 토큰의 인증 정보를 현재 쓰레드의 SecurityContext에 저장하는 역할을 수행할것이다.
+TODO
+ */
 @RequiredArgsConstructor
 public class SecurityFilter extends OncePerRequestFilter {
     private final SecurityProvider provider;
